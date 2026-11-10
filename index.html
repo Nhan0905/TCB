@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -209,7 +209,7 @@
         }
     </style>
 </head>
-<body class="antialiased selection:bg-brand-accent selection:text-black">
+<body class="antialiased is-admin selection:bg-brand-accent selection:text-black">
 
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 z-[200] bg-brand-black flex items-center justify-center transition-all duration-500">
@@ -244,31 +244,15 @@
                 <a href="#gallery" class="font-heading text-base tracking-wider text-gray-300 hover:text-white transition-colors py-1 border-b-2 border-transparent">Kỉ Niệm</a>
             </div>
 
-            <!-- Khu vực đăng nhập -->
-            <div class="flex items-center gap-3">
-                <button id="nav-login-btn" class="btn-press flex items-center gap-2 bg-white/5 hover:bg-brand-accent hover:text-black text-white font-heading text-sm tracking-wider px-4 py-2 rounded-lg transition-all border border-white/10">
-                    <i class="fa-solid fa-user-shield"></i><span class="hidden sm:inline">Quản Trị</span>
+            <!-- Sao lưu / Nhập dữ liệu (không cần đăng nhập) -->
+            <div class="flex items-center gap-2">
+                <button id="export-btn" title="Xuất file sao lưu" class="btn-press flex items-center gap-2 bg-white/5 hover:bg-brand-accent hover:text-black text-white font-heading text-sm tracking-wider px-3.5 py-2 rounded-lg transition-all border border-white/10">
+                    <i class="fa-solid fa-download"></i><span class="hidden md:inline">Sao lưu</span>
                 </button>
-
-                <div id="user-menu" class="relative" style="display:none">
-                    <button id="user-menu-btn" class="flex items-center gap-2 bg-brand-card border border-brand-accent/50 rounded-lg pl-2 pr-3 py-1.5 hover:border-brand-accent transition-all">
-                        <span id="user-avatar" class="w-6 h-6 rounded bg-brand-accent text-black flex items-center justify-center font-heading text-sm font-bold">A</span>
-                        <span id="user-name" class="hidden sm:inline text-sm font-semibold max-w-[8rem] truncate">admin</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform" id="user-menu-icon"></i>
-                    </button>
-                    <div id="user-dropdown" class="absolute right-0 top-full mt-2 w-60 bg-[#16161A] border border-white/15 rounded-xl shadow-2xl overflow-hidden z-50 transition-all duration-200 opacity-0 invisible translate-y-2 origin-top-right scale-95">
-                        <div class="px-4 py-3 border-b border-white/10 bg-white/[0.02]">
-                            <p class="text-[11px] text-gray-400 uppercase tracking-wider">Đang đăng nhập</p>
-                            <p id="user-dropdown-name" class="text-sm font-bold text-white truncate">admin</p>
-                            <p class="text-[11px] text-brand-accent mt-0.5"><i class="fa-solid fa-check-circle mr-1"></i> Quản trị viên TCB</p>
-                        </div>
-                        <button id="account-btn" class="w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-brand-accent hover:text-black font-medium transition-colors flex items-center"><i class="fa-solid fa-key w-6"></i>Đổi mật khẩu</button>
-                        <button id="export-btn" class="w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-brand-accent hover:text-black font-medium transition-colors flex items-center"><i class="fa-solid fa-download w-6"></i>Xuất file sao lưu</button>
-                        <button id="import-btn" class="w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-brand-accent hover:text-black font-medium transition-colors flex items-center"><i class="fa-solid fa-upload w-6"></i>Nhập dữ liệu</button>
-                        <button id="logout-btn" class="w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-red-600 hover:text-white border-t border-white/10 transition-colors flex items-center"><i class="fa-solid fa-right-from-bracket w-6"></i>Đăng xuất</button>
-                        <input type="file" id="import-file" accept="application/json,.json" class="hidden">
-                    </div>
-                </div>
+                <button id="import-btn" title="Nhập dữ liệu từ file sao lưu" class="btn-press flex items-center gap-2 bg-white/5 hover:bg-brand-accent hover:text-black text-white font-heading text-sm tracking-wider px-3.5 py-2 rounded-lg transition-all border border-white/10">
+                    <i class="fa-solid fa-upload"></i><span class="hidden md:inline">Nhập dữ liệu</span>
+                </button>
+                <input type="file" id="import-file" accept="application/json,.json" class="hidden">
             </div>
 
             <button id="mobile-menu-btn" class="lg:hidden text-white focus:outline-none btn-press">
@@ -1331,72 +1315,6 @@
             <img id="lb-img" src="" alt="" class="max-h-[82vh] mx-auto rounded-xl shadow-2xl object-contain border border-white/10">
             <figcaption id="lb-caption" class="mt-4 text-sm font-medium text-gray-200 bg-brand-gray inline-block px-5 py-2 rounded-lg border border-white/10"></figcaption>
         </figure>
-    </div>
-
-    <!-- Modal đăng nhập -->
-    <div id="login-modal" class="fixed inset-0 z-[120] bg-black/85 hidden items-center justify-center backdrop-blur-sm p-4 opacity-0 transition-opacity duration-200">
-        <div class="glass-card p-8 rounded-2xl w-full max-w-sm relative transform scale-95 transition-transform duration-200" id="login-content">
-            <button id="close-login-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white w-8 h-8 flex items-center justify-center rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-brand-accent/15 border border-brand-accent/40 flex items-center justify-center">
-                    <i class="fa-solid fa-lock text-xl text-brand-accent"></i>
-                </div>
-                <h4 class="font-heading text-2xl text-white">ĐĂNG NHẬP QUẢN TRỊ</h4>
-                <p class="text-xs text-gray-400 mt-1">TCB Tân Châu Basketball Club</p>
-            </div>
-            <form id="login-form" class="space-y-4">
-                <div class="relative">
-                    <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                    <input type="text" id="login-user" required autocomplete="username" placeholder="Tên đăng nhập"
-                           class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-brand-accent transition">
-                </div>
-                <div class="relative">
-                    <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
-                    <input type="password" id="login-password" required autocomplete="current-password" placeholder="Mật khẩu"
-                           class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg pl-10 pr-10 py-3 focus:outline-none focus:border-brand-accent transition">
-                    <button type="button" class="toggle-eye absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white" data-target="login-password"><i class="fa-solid fa-eye text-sm"></i></button>
-                </div>
-                <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer select-none">
-                    <input type="checkbox" id="login-remember" class="accent-brand-accent w-4 h-4 rounded"> Ghi nhớ đăng nhập
-                </label>
-                <p id="login-error" class="hidden text-red-400 text-xs bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg text-center"></p>
-                <button type="submit" id="login-submit" class="btn-press w-full bg-brand-accent hover:bg-amber-400 text-black font-heading text-lg py-3 rounded-lg transition-all font-bold tracking-wider">ĐĂNG NHẬP</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal đổi mật khẩu -->
-    <div id="account-modal" class="fixed inset-0 z-[120] bg-black/85 hidden items-center justify-center backdrop-blur-sm p-4 overflow-y-auto opacity-0 transition-opacity duration-200">
-        <div class="glass-card p-8 rounded-2xl w-full max-w-sm relative transform scale-95 transition-transform duration-200" id="account-content">
-            <button id="close-account-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white w-8 h-8 rounded-lg flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-            <h4 class="font-heading text-2xl text-white mb-5 border-b border-white/10 pb-3">ĐỔI MẬT KHẨU</h4>
-            <form id="account-form" class="space-y-3.5">
-                <div>
-                    <label class="block text-gray-400 text-xs uppercase font-semibold mb-1">Tên đăng nhập</label>
-                    <input type="text" id="acc-user" required minlength="3" maxlength="30" class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-brand-accent transition">
-                </div>
-                <div>
-                    <label class="block text-gray-400 text-xs uppercase font-semibold mb-1">Mật khẩu hiện tại *</label>
-                    <div class="relative">
-                        <input type="password" id="acc-current" required autocomplete="current-password" class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg px-3.5 pr-10 py-2.5 focus:outline-none focus:border-brand-accent transition">
-                        <button type="button" class="toggle-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white" data-target="acc-current"><i class="fa-solid fa-eye text-sm"></i></button>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-gray-400 text-xs uppercase font-semibold mb-1">Mật khẩu mới</label>
-                    <div class="relative">
-                        <input type="password" id="acc-new" minlength="4" autocomplete="new-password" class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg px-3.5 pr-10 py-2.5 focus:outline-none focus:border-brand-accent transition">
-                        <button type="button" class="toggle-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white" data-target="acc-new"><i class="fa-solid fa-eye text-sm"></i></button>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-gray-400 text-xs uppercase font-semibold mb-1">Xác nhận mật khẩu mới</label>
-                    <input type="password" id="acc-confirm" autocomplete="new-password" class="w-full bg-brand-black border border-white/15 text-white text-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-brand-accent transition">
-                </div>
-                <p id="account-error" class="hidden text-red-400 text-xs bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg text-center"></p>
-                <button type="submit" class="btn-press w-full bg-brand-accent hover:bg-amber-400 text-black font-bold py-3 rounded-lg transition-colors mt-2 text-sm uppercase tracking-wider">LƯU THAY ĐỔI</button>
-            </form>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -3170,8 +3088,6 @@
                             if (e.key === 'Escape') {
                                 if (modal && !modal.classList.contains('hidden')) closeModal();
                                 if (detailModal && !detailModal.classList.contains('hidden')) closePlayerDetail();
-                                if (loginModal && !loginModal.classList.contains('hidden')) closeLogin();
-                                if (accountModal && !accountModal.classList.contains('hidden')) closeAccount();
                             }
                         });
 
@@ -3205,29 +3121,7 @@
                             backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
                         }
 
-                        // Đăng nhập & Quản trị
-                        const cyrb53 = (str, seed = 0) => {
-                            let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-                            for (let i = 0, ch; i < str.length; i++) {
-                                ch = str.charCodeAt(i);
-                                h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677);
-                            }
-                            h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-                            h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-                            return 4294967296 * (2097151 & h2) + (h1 >>> 0);
-                        };
-                        const CRED_KEY = 'tcb-admin-cred-v2';
-                        const AUTH_SESSION_KEY = 'tcb-auth-session'; const AUTH_REMEMBER_KEY = 'tcb-auth-remember';
-                        const DEFAULT_CRED = { user: 'admin', hash: 201211402666754 };
-
-                        function getCred() {
-                            try {
-                                const raw = localStorage.getItem(CRED_KEY) || localStorage.getItem('tcb-admin-cred-v1');
-                                if (raw) { const c = JSON.parse(raw); if (c && c.user) return { user: c.user, hash: Number(c.hash) }; }
-                            } catch (err) {} return { ...DEFAULT_CRED };
-                        }
-                        function saveCred(c) { try { localStorage.setItem(CRED_KEY, JSON.stringify(c)); return true; } catch (err) { return false; } }
-
+                        // Hiển thị thông báo nhanh (toast)
                         function showToast(msg) {
                             const t = document.createElement('div');
                             t.innerHTML = `<i class="fa-solid fa-circle-check text-brand-accent mr-2"></i> ${msg}`;
@@ -3235,135 +3129,7 @@
                             document.body.appendChild(t);
                             setTimeout(() => t.remove(), 2600);
                         }
-
-                        const navLoginBtn = document.getElementById('nav-login-btn');
-                        const userMenu = document.getElementById('user-menu');
-                        const userDropdown = document.getElementById('user-dropdown');
-                        const loginModal = document.getElementById('login-modal');
-                        const loginContent = document.getElementById('login-content');
-                        const accountModal = document.getElementById('account-modal');
-                        const accountContent = document.getElementById('account-content');
-                        let currentUser = null;
-
-                        function setAuth(user) {
-                            currentUser = user;
-                            document.body.classList.toggle('is-admin', !!user);
-                            if (navLoginBtn) navLoginBtn.style.display = user ? 'none' : '';
-                            if (userMenu) userMenu.style.display = user ? '' : 'none';
-                            closeDropdown();
-                            if (user) {
-                                document.getElementById('user-name').textContent = user;
-                                document.getElementById('user-dropdown-name').textContent = user;
-                                document.getElementById('user-avatar').textContent = user.charAt(0).toUpperCase();
-                            }
-                        }
-
-                        navLoginBtn?.addEventListener('click', () => {
-                            document.getElementById('login-form').reset();
-                            document.getElementById('login-error').classList.add('hidden');
-                            loginModal.classList.remove('hidden'); loginModal.classList.add('flex');
-                            void loginModal.offsetWidth;
-                            loginModal.classList.remove('opacity-0');
-                            loginContent.classList.remove('scale-95'); loginContent.classList.add('scale-100');
-                            document.getElementById('login-user').focus();
-                        });
-
-                        function closeLogin() {
-                            if (!loginModal) return;
-                            loginModal.classList.add('opacity-0');
-                            loginContent.classList.remove('scale-100'); loginContent.classList.add('scale-95');
-                            setTimeout(() => { loginModal.classList.add('hidden'); loginModal.classList.remove('flex'); }, 200);
-                        }
-                        document.getElementById('close-login-btn')?.addEventListener('click', closeLogin);
-                        loginModal?.addEventListener('click', (e) => { if (e.target === loginModal) closeLogin(); });
-
-                        document.getElementById('login-form')?.addEventListener('submit', (e) => {
-                            e.preventDefault();
-                            const cred = getCred(); const u = document.getElementById('login-user').value.trim();
-                            if (u.toLowerCase() === cred.user.toLowerCase() && cyrb53(document.getElementById('login-password').value) === cred.hash) {
-                                const remember = document.getElementById('login-remember').checked;
-                                try {
-                                    sessionStorage.removeItem(AUTH_SESSION_KEY); localStorage.removeItem(AUTH_REMEMBER_KEY);
-                                    if (remember) localStorage.setItem(AUTH_REMEMBER_KEY, cred.user); else sessionStorage.setItem(AUTH_SESSION_KEY, cred.user);
-                                } catch(err) {}
-                                setAuth(cred.user); closeLogin(); showToast('Đăng nhập thành công!');
-                            } else {
-                                const err = document.getElementById('login-error');
-                                err.textContent = 'Sai tên đăng nhập hoặc mật khẩu.';
-                                err.classList.remove('hidden');
-                            }
-                        });
-
-                        document.querySelectorAll('.toggle-eye').forEach(b => {
-                            b.addEventListener('click', () => {
-                                const input = document.getElementById(b.dataset.target);
-                                const show = input.type === 'password';
-                                input.type = show ? 'text' : 'password';
-                                b.firstElementChild.className = show ? 'fa-solid fa-eye-slash text-sm' : 'fa-solid fa-eye text-sm';
-                            });
-                        });
-
-                        function toggleDropdown(e) {
-                            e.stopPropagation();
-                            if (!userDropdown) return;
-                            const isHidden = userDropdown.classList.contains('opacity-0');
-                            if (isHidden) {
-                                userDropdown.classList.remove('invisible', 'opacity-0', 'scale-95', 'translate-y-2');
-                                document.getElementById('user-menu-icon')?.classList.add('rotate-180');
-                            } else closeDropdown();
-                        }
-                        function closeDropdown() {
-                            if (!userDropdown) return;
-                            userDropdown.classList.add('opacity-0', 'scale-95', 'translate-y-2');
-                            document.getElementById('user-menu-icon')?.classList.remove('rotate-180');
-                            setTimeout(() => { if (userDropdown.classList.contains('opacity-0')) userDropdown.classList.add('invisible'); }, 200);
-                        }
-
-                        document.getElementById('user-menu-btn')?.addEventListener('click', toggleDropdown);
-                        document.addEventListener('click', closeDropdown);
-
-                        document.getElementById('logout-btn')?.addEventListener('click', () => {
-                            try { sessionStorage.removeItem(AUTH_SESSION_KEY); localStorage.removeItem(AUTH_REMEMBER_KEY); } catch(err) {}
-                            setAuth(null); showToast('Đã đăng xuất');
-                        });
-
-                        document.getElementById('account-btn')?.addEventListener('click', () => {
-                            document.getElementById('account-form').reset();
-                            document.getElementById('acc-user').value = currentUser;
-                            document.getElementById('account-error').classList.add('hidden');
-                            accountModal.classList.remove('hidden'); accountModal.classList.add('flex');
-                            void accountModal.offsetWidth;
-                            accountModal.classList.remove('opacity-0');
-                            accountContent.classList.remove('scale-95'); accountContent.classList.add('scale-100');
-                        });
-
-                        function closeAccount() {
-                            if (!accountModal) return;
-                            accountModal.classList.add('opacity-0');
-                            accountContent.classList.remove('scale-100'); accountContent.classList.add('scale-95');
-                            setTimeout(() => { accountModal.classList.add('hidden'); accountModal.classList.remove('flex'); }, 200);
-                        }
-                        document.getElementById('close-account-btn')?.addEventListener('click', closeAccount);
-                        accountModal?.addEventListener('click', (e) => { if (e.target === accountModal) closeAccount(); });
-
-                        document.getElementById('account-form')?.addEventListener('submit', (e) => {
-                            e.preventDefault();
-                            const cred = getCred(); const newUser = document.getElementById('acc-user').value.trim();
-                            const current = document.getElementById('acc-current').value;
-                            const np = document.getElementById('acc-new').value; const confirmPw = document.getElementById('acc-confirm').value;
-                            const err = document.getElementById('account-error');
-
-                            if (cyrb53(current) !== cred.hash) { err.textContent = 'Mật khẩu hiện tại sai.'; err.classList.remove('hidden'); return; }
-                            if (np && np !== confirmPw) { err.textContent = 'Mật khẩu mới không khớp.'; err.classList.remove('hidden'); return; }
-
-                            saveCred({ user: newUser, hash: np ? cyrb53(np) : cred.hash });
-                            setAuth(newUser); closeAccount(); showToast('Đã cập nhật mật khẩu');
-                        });
-
-                        try {
-                            const saved = sessionStorage.getItem(AUTH_SESSION_KEY) || localStorage.getItem(AUTH_REMEMBER_KEY);
-                            if (saved) setAuth(saved);
-                        } catch(err) {}
+                        document.body.classList.add('is-admin');
 
                         document.getElementById('export-btn')?.addEventListener('click', () => {
                             const aboutBanner = localStorage.getItem(ABOUT_IMG_KEY) || null;
